@@ -1,22 +1,8 @@
-#
-# ~/.bashrc
-#
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+end
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-#alias ls='ls --color=force'
-neofetch
-
-
-### SHOPT
-shopt -s autocd # change to named directory
-shopt -s cdspell # autocorrects cd misspellings
-shopt -s cmdhist # save multi-line commands in history as single line
-shopt -s dotglob
-shopt -s histappend # do not overwrite history
-shopt -s expand_aliases # expand aliases
-shopt -s checkwinsize # checks term size when bash regains control
+starship init fish | source
 
 # Changing "ls" to "exa"
 alias ls='exa -l --color=always --group-directories-first' # my preferred listing
@@ -32,11 +18,3 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-# confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-#alias rm='rm -i'
-
-PS1='[\u@\h \W]\$ '
-
-eval "$(starship init bash)"

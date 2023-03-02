@@ -430,3 +430,4 @@
 ;;(setq bibliography-file (concat user-emacs-directory "/bibliography.el"))
 ;;(load-file bibliography-file)
 
+(put 'dired-find-alternate-file 'disabled nil)
