@@ -9,9 +9,19 @@
 
 (setq visible-bell t)       ; Set up the visible bell
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height 110)
-
 (load-theme 'wombat)
+
+;; Function copied from https://github.com/daviwil/
+(defun set-font-faces ()
+    (message "Setting faces.")
+  (set-face-attribute 'default nil :font "Fira Code Retina" :height 115))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+	      (lambda (frame)
+		(with-selected-frame frame
+		  (set-font-faces))))
+  (set-font-faces))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -44,8 +54,8 @@
 ;; Change windows with shift key
 ;(windmove-default-keybindings)
 
-(use-package company-box
-   :hook (company-mode . company-box-mode))
+;(use-package company-box
+;   :hook (company-mode . company-box-mode))
 
 
 ;;Dired configuration
