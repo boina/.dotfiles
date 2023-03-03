@@ -18,3 +18,8 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
+
+# Custom key bindings. Similar to emacs.
+
+bind \eb 'prevd-or-backward-word'
+bind \ef 'nextd-or-forward-word'
