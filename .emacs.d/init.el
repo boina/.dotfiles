@@ -47,6 +47,7 @@
 (setq set-mark-command-repeat-pop t)
 
 ;;avy configuration
+(use-package avy)
 (global-set-key (kbd "C-:") 'avy-goto-char)
 (global-set-key (kbd "C-;") 'avy-goto-char-2)
 (global-set-key (kbd "C-.") 'avy-goto-word-1)
