@@ -67,12 +67,12 @@
 
 ;;Dired configuration
 (use-package dired
-     :ensure nil
-     :commands (dired dired-jump)
-     :bind (("C-x C-j" . dired-jump))
-     :custom ((dired-listing-switches "-lgh --group-directories-first"))
-     :config (setq dired-kill-when-opening-new-dired-buffer 1)
-     :hook (diredfl-mode))
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-lgh --group-directories-first"))
+  :config (setq dired-kill-when-opening-new-dired-buffer 1)
+  :hook (diredfl-mode))
 
 (setq delete-by-moving-to-trash 1)
 
@@ -85,7 +85,7 @@
 
 (package-initialize)
 (unless package-archive-contents
- (package-refresh-contents))
+  (package-refresh-contents))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
@@ -93,7 +93,10 @@
 (use-package doom-modeline
   :ensure t
   :init
-  (doom-modeline-mode 1))
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-minor-modes 1
+	doom-modeline-height 30))
 
 (use-package which-key
   :init (which-key-mode)
