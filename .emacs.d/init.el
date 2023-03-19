@@ -54,9 +54,15 @@
 ;; Change windows with shift key
 ;(windmove-default-keybindings)
 
-;(use-package company-box
-;   :hook (company-mode . company-box-mode))
 
+(use-package company
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
+
+;;(use-package company-box
+;;  :ensure t
+;;  :hook (company-mode . company-box-mode))
 
 ;;Dired configuration
 (use-package dired
@@ -226,16 +232,11 @@
    :config (setq show-paren-delay 0)
            (show-paren-mode 1))
  
-(use-package auto-complete
-  :hook (ess-mode  . auto-complete-mode)
-        (r-mode    . auto-complete-mode)
-        (prog-mode . auto-complete-mode)
-  :config(ac-config-default))
-
 ;;Configuration of text mode
 (defun text-mode-setup ()
-  (visual-line-mode 1))
-  ;;(flyspell-mode 1)
+  (visual-line-mode 1)
+  (flyspell-mode 1)
+  (company-mode -1))
   ;;(flyspell-buffer))
 
 (add-hook 'text-mode-hook 'text-mode-setup)
