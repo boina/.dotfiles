@@ -271,7 +271,9 @@
 	'("~/OrgFiles/Tasks.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
-  	  "~/OrgFiles/Workout.org"))
+  	  "~/OrgFiles/Workout.org")
+	org-directory
+        '("~/Labo/PD_Malhotra_CRG")))
   (setq org-capture-templates
 	`(("t" "Tasks")
 	  ("tt" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Inbox")
