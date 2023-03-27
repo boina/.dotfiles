@@ -285,8 +285,7 @@
 	   ((tags-todo "labo")
 	     ;;((org-agenda-files '("~/org/goals.org"))
 	     ;; (org-agenda-overriding-header "Secondary goals this month")))
-	    (agenda))))))
-  
+	    (agenda)))))
   (setq org-capture-templates
 	'(("t" "Tasks")
 	  ("tt" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Inbox")
@@ -295,7 +294,10 @@
 	  ("mp" "Blood pressure" table-line (file+headline "~/OrgFiles/Metrics.org" "Pressure")
 	   "| %U | %^{High} | %^{Low} | %^{Heart rate} | %^{Notes} |" :kill-buffer t)
 	  ("mr" "Running" table-line (file+headline "~/OrgFiles/Metrics.org" "Running")
-	   "| %U | %^{Distance} | %^{Time} | %^{Pace} | %^{Notes} |" :kill-buffer t))))
+	   "| %U | %^{Distance} | %^{Time} | %^{Pace} | %^{Notes} |" :kill-buffer t)
+	  ("n" "Notes")
+	  ("np" "Como estuvo el día?" table-line (file "~/OrgFiles/ElDia.org")
+	   "| %U | %^{General} | %^{Notes} |" :kill-buffer t))))
 
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
