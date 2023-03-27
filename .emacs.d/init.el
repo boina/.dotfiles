@@ -271,11 +271,24 @@
 	'("~/OrgFiles/Tasks.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
-  	  "~/OrgFiles/Workout.org")
-	org-directory
-        '("~/Labo/PD_Malhotra_CRG")))
+  	  "~/OrgFiles/Workout.org"
+          "~/Labo/PD_Malhotra_CRG/Projects/Mucin sorting/Mucin tagging/MucinFluorescentTagging.org"))
+  (setq org-agenda-custom-commands
+	'(("d" "What's up for today?"
+	   ((alltodo)
+ 	     ;;"GHD+ACTIVE+PRIORITY=\"A\""
+	     ;;((org-agenda-files '("~/org/goals.org"))
+	     ;;(org-agenda-overriding-header "Primary goals this month"))
+	   (agenda "" ((org-agenda-span 1)
+			(org-agenda-overriding-header "Today")))))
+	  ("w" "And the week?"
+	   ((tags-todo "labo")
+	     ;;((org-agenda-files '("~/org/goals.org"))
+	     ;; (org-agenda-overriding-header "Secondary goals this month")))
+	    (agenda))))))
+  
   (setq org-capture-templates
-	`(("t" "Tasks")
+	'(("t" "Tasks")
 	  ("tt" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Inbox")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 	  ("m" "Metrics Capture")
