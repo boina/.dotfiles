@@ -267,6 +267,7 @@
 	org-agenda-start-with-log-mode t
 	org-log-done 'time
 	org-log-into-drawer t
+	org-special-ctrl-a/e t
 	org-agenda-files
 	'("~/OrgFiles/Tasks.org"
 	  ;;"~/OrgFiles/Habits.org"
@@ -275,17 +276,11 @@
           "~/Labo/PD_Malhotra_CRG/Projects/Mucin sorting/Mucin tagging/MucinFluorescentTagging.org"))
   (setq org-agenda-custom-commands
 	'(("d" "What's up for today?"
-	   ((alltodo)
- 	     ;;"GHD+ACTIVE+PRIORITY=\"A\""
-	     ;;((org-agenda-files '("~/org/goals.org"))
-	     ;;(org-agenda-overriding-header "Primary goals this month"))
-	   (agenda "" ((org-agenda-span 1)
-			(org-agenda-overriding-header "Today")))))
+	   ((alltodo "" ((org-agenda-overriding-header "Para no olvidarme lo que tengo que hacer")))
+ 	    (agenda  "" ((org-agenda-span 1) (org-agenda-overriding-header "Agenda de hoy")))))
 	  ("w" "And the week?"
-	   ((tags-todo "labo")
-	     ;;((org-agenda-files '("~/org/goals.org"))
-	     ;; (org-agenda-overriding-header "Secondary goals this month")))
-	    (agenda)))))
+	   ((alltodo "" ((org-agenda-overriding-header "Para no olvidarme lo que tengo que hacer")))
+	    (agenda  "" ((org-agenda-overriding-header "Agenda de la semana")))))))
   (setq org-capture-templates
 	'(("t" "Tasks")
 	  ("tt" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Inbox")
