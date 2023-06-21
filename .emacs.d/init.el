@@ -46,6 +46,20 @@
 
 (setq set-mark-command-repeat-pop t)
 
+;; Initialize package sources
+(require 'package)
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 ;;Avy configuration
 (use-package avy)
 (global-set-key (kbd "C-:") 'avy-goto-char)
@@ -65,6 +79,15 @@
 ;;  :ensure t
 ;;  :hook (company-mode . company-box-mode))
 
+
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-minor-modes 1
+	doom-modeline-height 30))
+
 ;;Dired configuration
 (use-package dired
   :ensure nil
@@ -76,27 +99,6 @@
 
 (setq delete-by-moving-to-trash 1)
 
-;; Initialize package sources
-(require 'package)
-
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-(use-package doom-modeline
-  :ensure t
-  :init
-  (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-minor-modes 1
-	doom-modeline-height 30))
 
 (use-package which-key
   :init (which-key-mode)
@@ -128,19 +130,12 @@
   :init
   (marginalia-mode))
 
-(use-package orderless
-  :ensure t
-  :init
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
-
-
 (use-package savehist
   :config
   (setq history-length 25)
   :init
   (savehist-mode))
+
 
 (use-package consult
   :ensure t
@@ -154,6 +149,19 @@
   ;;  (completion-in-region-function #'consult-completion-in-region)
   :config
   (consult-customize))
+
+(require 'move-text)
+(move-text-default-bindings)
+
+(defun indent-region-advice (&rest ignored)
+  (let ((deactivate deactivate-mark))
+    (if (region-active-p)
+	(indent-region (region-beginning) (region-end))
+      (indent-region (line-beginning-position) (line-end-position)))
+    (setq deactivate-mark deactivate)))
+
+(advice-add 'move-text-up :after 'indent-region-advice)
+(advice-add 'move-text-down :after 'indent-region-advice)
 
 
 ;;(use-package ivy
@@ -270,6 +278,7 @@
 	org-special-ctrl-a/e t
 	org-agenda-files
 	'("~/OrgFiles/Tasks.org"
+	  "~/OrgFiles/Agenda.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
   	  "~/OrgFiles/Workout.org"
@@ -370,21 +379,20 @@
        :file-name "Journal/%<%Y-%m-%d>"
        :olp ("Log")
        :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
-  :bind (:map org-roam-mode-map
-          (("C-c n l"   . org-roam)
-           ("C-c n f"   . org-roam-find-file)
-           ("C-c n d"   . org-roam-dailies-find-date)
-           ("C-c n c"   . org-roam-dailies-capture-today)
-           ("C-c n C r" . org-roam-dailies-capture-tomorrow)
-           ("C-c n t"   . org-roam-dailies-find-today)
-           ("C-c n y"   . org-roam-dailies-find-yesterday)
-           ("C-c n r"   . org-roam-dailies-find-tomorrow)
-           ("C-c n g"   . org-roam-graph))
-         :map org-mode-map
-         (("C-c n i" . org-roam-insert))
-         (("C-c n I" . org-roam-insert-immediate)))
-  :config
-  (org-roam-setup))
+  :bind (("C-c n l"   . org-roam)
+         ("C-c n f"   . org-roam-find-node)
+         ("C-c n d"   . org-roam-dailies-find-date)
+         ("C-c n c"   . org-roam-dailies-capture-today)
+         ("C-c n C r" . org-roam-dailies-capture-tomorrow)
+         ("C-c n t"   . org-roam-dailies-find-today)
+         ("C-c n y"   . org-roam-dailies-find-yesterday)
+         ("C-c n r"   . org-roam-dailies-find-tomorrow)
+         ("C-c n g"   . org-roam-graph))
+  :map org-mode-map
+  (("C-c n i" . org-roam-insert))
+  (("C-c n I" . org-roam-insert-immediate)))
+:config
+(org-roam-setup))
 
 
 
