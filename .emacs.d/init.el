@@ -92,13 +92,11 @@
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
-  :bind (("C-x C-j" . dired-jump))
-  :custom ((dired-listing-switches "-lgh --group-directories-first"))
-  :config (setq dired-kill-when-opening-new-dired-buffer 1)
+  :config (setq dired-kill-when-opening-new-dired-buffer 1
+		delete-by-moving-to-trash 1
+		dired-listing-switches "-lgh --group-directories-first"
+		dired-omit-files "\\.[^.].*")
   :hook (diredfl-mode))
-
-(setq delete-by-moving-to-trash 1)
-
 
 (use-package which-key
   :init (which-key-mode)
@@ -162,6 +160,10 @@
 
 (advice-add 'move-text-up :after 'indent-region-advice)
 (advice-add 'move-text-down :after 'indent-region-advice)
+
+(use-package pubmed
+  :ensure t
+  :commands (pubmed-search pubmed-advanced-search))
 
 
 ;;(use-package ivy
