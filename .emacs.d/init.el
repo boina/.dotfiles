@@ -93,6 +93,7 @@
   :ensure nil
   :commands (dired dired-jump)
   :config (setq dired-kill-when-opening-new-dired-buffer 1
+		dired-dwim-target 1
 		delete-by-moving-to-trash 1
 		dired-listing-switches "-lgh --group-directories-first"
 		dired-omit-files "\\.[^.].*")
