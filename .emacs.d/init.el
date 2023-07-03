@@ -162,9 +162,15 @@
 (advice-add 'move-text-up :after 'indent-region-advice)
 (advice-add 'move-text-down :after 'indent-region-advice)
 
-(use-package pubmed
-  :ensure t
-  :commands (pubmed-search pubmed-advanced-search))
+;(use-package pubmed
+;  :ensure t
+;  :requires (pubmed-unpaywall pubmed-springer pubmed-dissemin pubmed-scihub)
+;  :commands (pubmed-search pubmed-advanced-search pubmed-save-as)
+; :config (setq  pubmed-api-key "38d4a4ce6747c1739bde2131977303e68208"
+;		 pubmed-unpaywall-email "jose.wo@posteo.net"
+;		 pubmed-springer-api-key "de01e8e321cb8812995b54d180ed2cec"
+;		 pubmed-scihub-url "https://sci-hub.st/"
+;		 pubmed-fulltext-functions '(pubmed-pmc pubmed-unpaywall pubmed-scihub pubmed-dissemin pubmed-openaccessbutton)))
 
 
 ;;(use-package ivy
@@ -323,67 +329,13 @@
 ;;org Roam
 (use-package org-roam
   :ensure t
-  ;;:hook
-  ;;(after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/OrgFiles/RoamNotes/")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'default)
-  (org-roam-capture-templates
-   '(("d" "default" plain
-      #'org-roam-capture--get-point
-      "%?"
-      :file-name "%<%Y%m%d%H%M%S>-${slug}"
-      :head "#+title: ${title}\n"
-      :unnarrowed t)
-     ("ll" "link note" plain
-      #'org-roam-capture--get-point
-      "* %^{Link}"
-      :file-name "Inbox"
-      :olp ("Links")
-      :unnarrowed t
-      :immediate-finish)
-     ("lt" "link task" entry
-      #'org-roam-capture--get-point
-      "* TODO %^{Link}"
-      :file-name "Inbox"
-      :olp ("Tasks")
-      :unnarrowed t
-      :immediate-finish)))
-  (org-roam-dailies-directory "Journal/")
-  (org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      #'org-roam-capture--get-point
-      "* %?"
-      :file-name "Journal/%<%Y-%m-%d>"
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-      ("t" "Task" entry
-       #'org-roam-capture--get-point
-       "* TODO %?\n  %U\n  %a\n  %i"
-       :file-name "Journal/%<%Y-%m-%d>"
-       :olp ("Tasks")
-       :empty-lines 1
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-      ("j" "journal" entry
-       #'org-roam-capture--get-point
-       "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
-       :file-name "Journal/%<%Y-%m-%d>"
-       :olp ("Log")
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-      ("l" "log entry" entry
-       #'org-roam-capture--get-point
-       "* %<%I:%M %p> - %?"
-       :file-name "Journal/%<%Y-%m-%d>"
-       :olp ("Log")
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-      ("m" "meeting" entry
-       #'org-roam-capture--get-point
-       "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
-       :file-name "Journal/%<%Y-%m-%d>"
-       :olp ("Log")
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
-  :bind (("C-c n l"   . org-roam)
-         ("C-c n f"   . org-roam-find-node)
+  :bind (("C-c n l"   . org-roam-buffer-toggle)
+         ("C-c n f"   . org-roam-node-find)
+	 ("C-c n i"   . org-roam-node-insert)
          ("C-c n d"   . org-roam-dailies-find-date)
          ("C-c n c"   . org-roam-dailies-capture-today)
          ("C-c n C r" . org-roam-dailies-capture-tomorrow)
@@ -391,11 +343,73 @@
          ("C-c n y"   . org-roam-dailies-find-yesterday)
          ("C-c n r"   . org-roam-dailies-find-tomorrow)
          ("C-c n g"   . org-roam-graph))
-  :map org-mode-map
-  (("C-c n i" . org-roam-insert))
-  (("C-c n I" . org-roam-insert-immediate)))
-:config
-(org-roam-setup))
+  :config
+  (org-roam-setup))
+
+
+;;:hook
+;;;  (after-init . org-roam-mode)
+
+;;;  (org-roam-capture-templates
+;;;   '(("d" "default" plain
+;;;      #'org-roam-capture--get-point
+;;;      "%?"
+;;;      :file-name "%<%Y%m%d%H%M%S>-${slug}"
+;;;      :head "#+title: ${title}\n"
+;;;      :unnarrowed t)
+;;;     ("ll" "link note" plain
+;;;      #'org-roam-capture--get-point
+;;;      "* %^{Link}"
+;;;      :file-name "Inbox"
+;;;      :olp ("Links")
+;;;      :unnarrowed t
+;;;      :immediate-finish)
+;;;     ("lt" "link task" entry
+;;;      #'org-roam-capture--get-point
+;;;      "* TODO %^{Link}"
+;;;      :file-name "Inbox"
+;;;      :olp ("Tasks")
+;;;      :unnarrowed t
+;;;      :immediate-finish)))
+;;;  (org-roam-dailies-directory "Journal/")
+;;;  (org-roam-dailies-capture-templates
+;;;   '(("d" "default" entry
+;;;      #'org-roam-capture--get-point
+;;;      "* %?"
+;;;      :file-name "Journal/%<%Y-%m-%d>"
+;;;       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+;;;      ("t" "Task" entry
+;;;       #'org-roam-capture--get-point
+;;;       "* TODO %?\n  %U\n  %a\n  %i"
+;;;       :file-name "Journal/%<%Y-%m-%d>"
+;;;       :olp ("Tasks")
+;;;       :empty-lines 1
+;;;       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+;;;      ("j" "journal" entry
+;;;       #'org-roam-capture--get-point
+;;;       "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
+;;;       :file-name "Journal/%<%Y-%m-%d>"
+;;;       :olp ("Log")
+;;;       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+;;;      ("l" "log entry" entry
+;;;       #'org-roam-capture--get-point
+;;;       "* %<%I:%M %p> - %?"
+;;;       :file-name "Journal/%<%Y-%m-%d>"
+;;;       :olp ("Log")
+;;;       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+;;;      ("m" "meeting" entry
+;;;       #'org-roam-capture--get-point
+;;;       "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
+;;;       :file-name "Journal/%<%Y-%m-%d>"
+;;;       :olp ("Log")
+;;;       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
+;;;  
+;;;  :map org-mode-map
+;;;  (("C-c n i" . org-roam-insert))
+;;;  (("C-c n I" . org-roam-insert-immediate)))
+;;;
+;;:config
+;;(org-roam-setup))
 
 
 
