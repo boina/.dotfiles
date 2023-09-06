@@ -1,0 +1,51 @@
+IMAPAccount Posteo
+Host posteo.de
+User jose.wo@posteo.net
+Port 993
+PassCmd "emacsclient -e \"(lookup-password :host \\\"posteo.de\\\" :user \\\"jose.wo@posteo.net\\\")\" | cut -d '\"' -f2"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore posteo-remote
+Account Posteo
+
+MaildirStore posteo-local
+Subfolders Verbatim
+Path ~/.Mail/Posteo/
+Inbox ~/.Mail/Posteo/Inbox
+
+Channel posteo
+Far :posteo-remote:
+Near :posteo-local:
+Sync All
+Patterns * !"Deleted Items"
+Create Both
+SyncState *
+Expunge Both
+
+
+IMAPAccount CRG
+Host outlook.office365.com
+User jwojnacki@crg.es
+##Port 993
+PassCmd oauth2ms
+AuthMechs XOAUTH2
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore CRG-remote
+Account CRG
+
+MaildirStore CRG-local
+Subfolders Verbatim
+Path ~/.Mail/CRG/
+Inbox ~/.Mail/CRG/Inbox
+
+Channel CRG
+Far :CRG-remote:
+Near :CRG-local:
+Sync All
+Patterns * !Archive !Calendar* !Contacts !"Conversation History" !Journal !Notes !Outbox !Sent !Tasks !Trash
+Create Both
+SyncState *
+Expunge Both
