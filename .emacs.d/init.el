@@ -88,6 +88,132 @@
   (setq doom-modeline-minor-modes 1
 	doom-modeline-height 30))
 
+
+;;Function to allow exteranl programs to acces emacs gpg files
+(defun lookup-password (&rest keys)
+  (let ((result (apply #'auth-source-search keys)))
+    (if result
+        (funcall (plist-get (car result) :secret))
+        nil)))
+
+
+
+;;Email
+
+;; Functions to send emails with smpt and msoauth method (what a horrible thing to do!!!)
+(use-package mu4e
+  :ensure nil
+  :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :defer 20
+  :config
+
+  (setq mu4e-compose-format-flowed t)
+  (setq shr-color-visible-luminance-min 60)
+  (setq message-kill-buffer-on-exit t) 
+  (setq mu4e-view-show-images t)
+
+  (setq message-send-mail-function 'smtpmail-send-it)
+
+  ;; This is set to 't' to avoid mail syncing issues when using mbsync
+  (setq mu4e-change-filenames-when-moving t)
+
+  (setq mu4e-context-policy 'pick-first)
+  
+  ;; Call the oauth2ms program to fetch the authentication token
+  (defun fetch-access-token ()
+    (with-temp-buffer
+      (call-process "oauth2ms" nil t nil "--encode-xoauth2")
+      (buffer-string)))
+
+  ;; Add new authentication method for xoauth2
+  (cl-defmethod smtpmail-try-auth-method
+    (process (_mech (eql xoauth2)) user password)
+    (let* ((access-token (fetch-access-token)))
+      (smtpmail-command-or-throw
+       process
+       (concat "AUTH XOAUTH2 " access-token)
+       235)))
+
+  ;; Register the method
+  (with-eval-after-load 'smtpmail
+    (add-to-list 'smtpmail-auth-supported 'xoauth2))
+
+  
+  ;; Refresh mail using isync every 10 minutes
+  (setq mu4e-update-interval (* 10 60))
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-maildir "~/.Mail")
+    
+  (setq mu4e-contexts
+	(list
+	 ;;CRG - Workflows
+	 (make-mu4e-context
+	  :name "CRG"
+	  :match-func
+	  (lambda (msg)
+	    (when msg
+	      (string-prefix-p "¨/CRG" (mu4e-message-field msg :maildir))))
+	  :vars '((user-mail-address . "jose.wojnacki@crg.eu")
+		  (user-full-name . "José Wojnacki")
+                  ;;(smtpmail-default-smtp-server . "smtp.office365.com")
+		  (smtpmail-smtp-server  . "smtp.office365.com")
+		  (smtpmail-smtp-service .  587)
+		  (smtpmail-stream-type  . starttls)
+		  (smtpmail-starttls-credentials . (("smtp.office365.com" 587 nil nil)))
+		  ;;(smtpmail-debug-info . t)
+ 		  (mu4e-drafts-folder . "/CRG/Drafts")
+		  (mu4e-sent-folder . "/CRG/Sent")
+		  (mu4e-trash-folder .  "/CRG/Deleted Items")))
+
+	 ;; Posteo account
+	 (make-mu4e-context
+	  :name "Posteo"
+	  :match-func
+	  (lambda (msg)
+	    (when msg
+	      (string-prefix-p "/Posteo" (mu4e-message-field msg :maildir))))
+	  :vars '((user-mail-address . "jose.wo@posteo.net")
+		  (user-full-name . "José Wojnacki")
+		  (smtpmail-smtp-server . "posteo.de")
+		  (smtpmail-smtp-service . 465)
+		  (smtpmail-stream-type . tls)
+		  (mu4e-drafts-folder . "/Posteo/Drafts")
+		  (mu4e-sent-folder . "/Posteo/Sent")
+		  (mu4e-trash-folder .  "/Posteo/Trash")))))
+
+  (setq mu4e-maildir-shortcuts
+	'(("/Posteo/Inbox"  . ?p)
+	  ("/Posteo/Sent"   . ?s)
+	  ("/CRG/Inbox"  . ?c)
+	  ("/CRG/Sent Items" . ?S)))
+
+  (setq mu4e-bookmarks
+	'(( :name "Unread messages"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and flag:unread"
+	    :key ?u)
+	  ( :name  "Unread messages Posteo"
+	    :query "maildir:/Posteo/Inbox and flag:unread"
+	    :key ?p)
+	  ( :name "CRG unread messages"
+	    :query "maildir:/CRG/Inbox and flag:unread and NOT from:LinkedIn"
+	    :key ?c)
+	  ( :name "Today's messages"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now"
+	    :key ?t)
+	  ( :name "CRG Last 7 days"
+	    :query "maildir:/CRG/Inbox and date:7d..now"
+	    :hide-unread t
+	    :key ?w)))
+
+  (mu4e t))
+
+
+;;Write emails in html
+(use-package org-mime
+  :ensure t)
+
+
+
 ;;Dired configuration
 (use-package dired
   :ensure nil
@@ -168,7 +294,7 @@
 ;  :commands (pubmed-search pubmed-advanced-search pubmed-save-as)
 ; :config (setq  pubmed-api-key "38d4a4ce6747c1739bde2131977303e68208"
 ;		 pubmed-unpaywall-email "jose.wo@posteo.net"
-;		 pubmed-springer-api-key "de01e8e321cb8812995b54d180ed2cec"
+    ;		 pubmed-springer-api-key "de01e8e321cb8812995b54d180ed2cec"
 ;		 pubmed-scihub-url "https://sci-hub.st/"
 ;		 pubmed-fulltext-functions '(pubmed-pmc pubmed-unpaywall pubmed-scihub pubmed-dissemin pubmed-openaccessbutton)))
 
