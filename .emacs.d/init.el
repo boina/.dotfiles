@@ -94,13 +94,18 @@
   (let ((result (apply #'auth-source-search keys)))
     (if result
         (funcall (plist-get (car result) :secret))
-        nil)))
+      nil)))
+
+
+;;ChatGPT GPTel Chatgpt client for emacs
+(use-package gptel
+  :ensure t
+  :config
+  (setq gptel-api-key 'gptel-api-key-from-auth-source))
 
 
 
 ;;Email
-
-;; Functions to send emails with smpt and msoauth method (what a horrible thing to do!!!)
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
@@ -125,6 +130,7 @@
       (call-process "oauth2ms" nil t nil "--encode-xoauth2")
       (buffer-string)))
 
+  ;; Functions to send emails with smpt and msoauth method (what a horrible thing to do!!!)
   ;; Add new authentication method for xoauth2
   (cl-defmethod smtpmail-try-auth-method
     (process (_mech (eql xoauth2)) user password)
