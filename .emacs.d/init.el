@@ -13,7 +13,7 @@
 
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
-    (message "Setting faces.")
+  (message "Setting faces.")
   (set-face-attribute 'default nil :font "Fira Code Retina" :height 115))
 
 (if (daemonp)
@@ -67,7 +67,7 @@
 (global-set-key (kbd "C-.") 'avy-goto-word-1)
 
 ;; Change windows with shift key
-;(windmove-default-keybindings)
+					;(windmove-default-keybindings)
 
 
 (use-package company
@@ -101,7 +101,7 @@
 (use-package gptel
   :ensure t
   :config
-  (setq gptel-api-key 'gptel-api-key-from-auth-source))
+  (setq gptel-api-key (gptel-api-key-from-auth-source)))
 
 
 
@@ -112,8 +112,13 @@
   :defer 20
   :config
 
+  (require 'mu4e-org)
+
+  ;;Avoid weird line breaks in text emails.
   (setq mu4e-compose-format-flowed t)
+
   (setq shr-color-visible-luminance-min 60)
+  
   (setq message-kill-buffer-on-exit t) 
   (setq mu4e-view-show-images t)
 
@@ -195,7 +200,7 @@
 
   (setq mu4e-bookmarks
 	'(( :name "Unread messages"
-	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and flag:unread"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND flag:unread AND NOT from:linkedin"
 	    :key ?u)
 	  ( :name  "Unread messages Posteo"
 	    :query "maildir:/Posteo/Inbox and flag:unread"
@@ -204,12 +209,46 @@
 	    :query "maildir:/CRG/Inbox and flag:unread and NOT from:LinkedIn"
 	    :key ?c)
 	  ( :name "Today's messages"
-	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now AND NOT from:linkedin"
 	    :key ?t)
 	  ( :name "CRG Last 7 days"
-	    :query "maildir:/CRG/Inbox and date:7d..now"
+	    :query "maildir:/CRG/Inbox and date:7d..now AND NOT from:linkedin"
 	    :hide-unread t
-	    :key ?w)))
+	    :key ?w)
+	  ( :name "LinkedIn"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND from:linkedin"
+	    :key ?l)))
+
+  (defun jw/capture-mail-follow-up (msg)
+    (interactive)
+    (call-interactively 'org-store-link)
+    (org-capture nil "ef"))
+
+  (defun jw/capture-mail-read-later (msg)
+    (interactive)
+    (call-interactively 'org-store-link)
+    (org-capture nil "er"))
+
+  (defun jw/capture-mail-events (msg)
+    (interactive)
+    (call-interactively 'org-store-link)
+    (org-capture nil "ea"))
+
+  ;; Add custom actions for our capture templates
+  (add-to-list 'mu4e-headers-actions
+	       '("follow up" . jw/capture-mail-follow-up) t)
+  (add-to-list 'mu4e-view-actions
+	       '("follow up" . jw/capture-mail-follow-up) t)
+  (add-to-list 'mu4e-headers-actions
+	       '("read later" . jw/capture-mail-read-later) t)
+  (add-to-list 'mu4e-view-actions
+	       '("read later" . jw/capture-mail-read-later) t)
+  (add-to-list 'mu4e-headers-actions
+	       '("events" . jw/capture-mail-events) t)
+  (add-to-list 'mu4e-view-actions
+	       '("events" . jw/capture-mail-events) t)
+
+
 
   (mu4e t))
 
@@ -420,6 +459,7 @@
 	org-agenda-files
 	'("~/OrgFiles/Tasks.org"
 	  "~/OrgFiles/Agenda.org"
+	  "~/OrgFiles/Mail.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
   	  "~/OrgFiles/Workout.org"
@@ -442,7 +482,14 @@
 	   "| %U | %^{Distance} | %^{Time} | %^{Pace} | %^{Notes} |" :kill-buffer t)
 	  ("n" "Notes")
 	  ("np" "Como estuvo el día?" table-line (file "~/OrgFiles/ElDia.org")
-	   "| %U | %^{General} | %^{Notes} |" :kill-buffer t))))
+	   "| %U | %^{General} | %^{Notes} |" :kill-buffer t)
+	  ("e" "Email Workflow")
+	  ("ef" "Follow Up" entry (file+olp "~/OrgFiles/Mail.org" "Follow Up")
+           "* TODO Follow up with %:fromname on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+3d\"))\n\n%i" :immediate-finish t)
+	  ("er" "Read Later" entry (file+olp "~/OrgFiles/Mail.org" "Read Later")
+           "* TODO Read %a from %:fromname\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+5d\"))\n%i" :immediate-finish t)
+	  ("ea" "Events" entry (file+olp "~/OrgFiles/Mail.org" "Events")
+           "* %?%:subject\n%^t\n\n%i"))))
 
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
