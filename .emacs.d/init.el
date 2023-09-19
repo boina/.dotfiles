@@ -103,7 +103,8 @@
   :config
   (setq gptel-api-key (gptel-api-key-from-auth-source)))
 
-
+;;Find synonyms
+(use-package synonymous)
 
 ;;Email
 (use-package mu4e
@@ -229,10 +230,15 @@
     (call-interactively 'org-store-link)
     (org-capture nil "er"))
 
-  (defun jw/capture-mail-events (msg)
+  (defun jw/capture-mail-personalAgenda (msg)
     (interactive)
     (call-interactively 'org-store-link)
-    (org-capture nil "ea"))
+    (org-capture nil "ep"))
+
+  (defun jw/capture-mail-workAgenda (msg)
+    (interactive)
+    (call-interactively 'org-store-link)
+    (org-capture nil "ew"))  
 
   ;; Add custom actions for our capture templates
   (add-to-list 'mu4e-headers-actions
@@ -244,10 +250,13 @@
   (add-to-list 'mu4e-view-actions
 	       '("read later" . jw/capture-mail-read-later) t)
   (add-to-list 'mu4e-headers-actions
-	       '("events" . jw/capture-mail-events) t)
+	       '("personalAgenda" . jw/capture-mail-personalAgenda) t)
   (add-to-list 'mu4e-view-actions
-	       '("events" . jw/capture-mail-events) t)
-
+	       '("personalAgenda" . jw/capture-mail-personalAgenda) t)
+  (add-to-list 'mu4e-headers-actions
+	       '("workAgenda" . jw/capture-mail-workAgenda) t)
+  (add-to-list 'mu4e-view-actions
+	       '("workAgenda" . jw/capture-mail-workAgenda) t)
 
 
   (mu4e t))
@@ -473,8 +482,10 @@
 	    (agenda  "" ((org-agenda-overriding-header "Agenda de la semana")))))))
   (setq org-capture-templates
 	'(("t" "Tasks")
-	  ("tt" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Inbox")
+	  ("tp" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Personal")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+	  ("tw" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Work")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)	  
 	  ("m" "Metrics Capture")
 	  ("mp" "Blood pressure" table-line (file+headline "~/OrgFiles/Metrics.org" "Pressure")
 	   "| %U | %^{High} | %^{Low} | %^{Heart rate} | %^{Notes} |" :kill-buffer t)
@@ -488,7 +499,9 @@
            "* TODO Follow up with %:fromname on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+3d\"))\n\n%i" :immediate-finish t)
 	  ("er" "Read Later" entry (file+olp "~/OrgFiles/Mail.org" "Read Later")
            "* TODO Read %a from %:fromname\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+5d\"))\n%i" :immediate-finish t)
-	  ("ea" "Events" entry (file+olp "~/OrgFiles/Mail.org" "Events")
+	  ("ep" "Agenda Personal" entry (file+olp "~/OrgFiles/Agenda.org" "Personal")
+           "* %?%:subject\n%^t\n\n%i")
+	  ("ew" "Agenda Work" entry (file+olp "~/OrgFiles/Agenda.org" "Work")
            "* %?%:subject\n%^t\n\n%i"))))
 
 (require 'org-habit)
