@@ -500,9 +500,9 @@
 	  ("er" "Read Later" entry (file+olp "~/OrgFiles/Mail.org" "Read Later")
            "* TODO Read %a from %:fromname\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+5d\"))\n%i" :immediate-finish t)
 	  ("ep" "Agenda Personal" entry (file+olp "~/OrgFiles/Agenda.org" "Personal")
-           "* %?%:subject\n%^t\n\n%i")
+           "* %?%:subject %(org-set-tags \"personal\")\n%^t\n\n%i\ne-mail: %a")
 	  ("ew" "Agenda Work" entry (file+olp "~/OrgFiles/Agenda.org" "Work")
-           "* %?%:subject\n%^t\n\n%i"))))
+           "* %?%:subject %(org-set-tags \"work\")\n%^t\n\n%i\ne-mail: %a"))))
 
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
