@@ -55,6 +55,19 @@
 ;;  (set-face-background hl-line-face "grey16"))
 ;;(global-hl-line-mode t)
 
+;;Higlight current line with pulsar
+(use-package pulsar
+  :config
+  (setq pulsar-pulse t)
+  (setq pulsar-delay 0.055)
+  (setq pulsar-iterations 10)
+  (setq pulsar-face 'pulsar-cyan)
+  (setq pulsar-highlight-face 'pulsar-green)
+  (pulsar-global-mode 1))
+
+(global-set-key (kbd "C-c p") 'pulsar-pulse-line)
+(global-set-key (kbd "C-c P") 'pulsar-highlight-line)
+
 
 (setq set-mark-command-repeat-pop t)
 
