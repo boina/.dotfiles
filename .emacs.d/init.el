@@ -27,7 +27,7 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (column-number-mode)
-(global-display-line-numbers-mode t)
+(global-display-line-numbers-mode nil)
 
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'norerror 'nomessage)
@@ -40,8 +40,20 @@
                 term-mode-hook
                 shell-mode-hook
                 treemacs-mode-hook
-                eshell-mode-hook))
+                eshell-mode-hook
+		pdf-view-mode-hook
+		dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+
+
+;;;;Highlight current line
+;;(defadvice hl-line-mode (after
+;;			 dino-advise-hl-line-mode
+;;			 activate compile)
+;;  (set-face-underline hl-line-face nil)
+;;  (set-face-background hl-line-face "grey16"))
+;;(global-hl-line-mode t)
 
 
 (setq set-mark-command-repeat-pop t)
@@ -63,11 +75,16 @@
 ;;Avy configuration
 (use-package avy)
 (global-set-key (kbd "C-:") 'avy-goto-char)
-(global-set-key (kbd "C-;") 'avy-goto-char-2)
+(global-set-key (kbd "C-,") 'avy-goto-char-2)
 (global-set-key (kbd "C-.") 'avy-goto-word-1)
 
-;; Change windows with shift key
-					;(windmove-default-keybindings)
+;;Use pdf-tools for reading pdfs in emacs
+(use-package pdf-tools
+  :ensure t
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-width))
+
 
 
 (use-package company
@@ -201,23 +218,23 @@
 
   (setq mu4e-bookmarks
 	'(( :name "Unread messages"
-	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND flag:unread AND NOT from:linkedin"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND flag:unread AND NOT from:linkedin AND NOT from:glassdoor"
 	    :key ?u)
 	  ( :name  "Unread messages Posteo"
 	    :query "maildir:/Posteo/Inbox and flag:unread"
 	    :key ?p)
 	  ( :name "CRG unread messages"
-	    :query "maildir:/CRG/Inbox and flag:unread and NOT from:LinkedIn"
+	    :query "maildir:/CRG/Inbox and flag:unread and NOT from:LinkedIn AND NOT from:glassdoor"
 	    :key ?c)
 	  ( :name "Today's messages"
-	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now AND NOT from:linkedin"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now AND NOT from:linkedin AND NOT from:glassdoor"
 	    :key ?t)
 	  ( :name "CRG Last 7 days"
-	    :query "maildir:/CRG/Inbox and date:7d..now AND NOT from:linkedin"
+	    :query "maildir:/CRG/Inbox and date:7d..now AND NOT from:linkedin AND NOT from:glassdoor"
 	    :hide-unread t
 	    :key ?w)
-	  ( :name "LinkedIn"
-	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND from:linkedin"
+	  ( :name "Jobs"
+	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND from:linkedin OR from:glassdoor"
 	    :key ?l)))
 
   (defun jw/capture-mail-follow-up (msg)
@@ -431,8 +448,14 @@
          (prog-mode . smartparens-mode)
          (Emacs-Lisp-mode . smartparens-mode)
    :config (setq show-paren-delay 0)
-           (show-paren-mode 1))
- 
+   (show-paren-mode 1))
+
+;;Color-code parenthesis acording to their depth
+(use-package rainbow-delimiters
+  :ensure t)
+
+
+
 ;;Configuration of text mode
 (defun text-mode-setup ()
   (visual-line-mode 1)
