@@ -57,6 +57,7 @@
 
 ;;Higlight current line with pulsar
 (use-package pulsar
+  :ensure t
   :config
   (setq pulsar-pulse t)
   (setq pulsar-delay 0.055)
