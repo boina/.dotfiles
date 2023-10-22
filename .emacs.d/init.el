@@ -27,26 +27,26 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 
+(setq custom-file (locate-user-emacs-file "custom-vars.el"))
+(load custom-file 'norerror 'nomessage)
+
+;;Revert buffers when the file changes in the disk
+(global-auto-revert-mode 1)
+
+
 ;; Initialize package sources
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-
-(column-number-mode 1)
+(column-number-mode)
 (global-display-line-numbers-mode 1)
-
-(setq custom-file (locate-user-emacs-file "custom-vars.el"))
-(load custom-file 'norerror 'nomessage)
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
@@ -58,12 +58,10 @@
 		dired-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-;;Revert buffers when the file changes in the disk
-(global-auto-revert-mode 1)
-
 
 ;;Higlight current line with pulsar
 (use-package pulsar
+  :ensure t
   :config
   (setq pulsar-pulse t)
   (setq pulsar-delay 0.055)
@@ -71,9 +69,6 @@
   (setq pulsar-face 'pulsar-cyan)
   (setq pulsar-highlight-face 'pulsar-green)
   (pulsar-global-mode 1))
-
-;;Functions added to the default list of functions for when pulsar is activated
-(add-to-list 'pulsar-pulse-functions 'switch-to-buffer)
 
 (global-set-key (kbd "C-c p") 'pulsar-pulse-line)
 (global-set-key (kbd "C-c P") 'pulsar-highlight-line)
@@ -94,8 +89,6 @@
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-width))
-
-
 
 (use-package company
   :ensure t
