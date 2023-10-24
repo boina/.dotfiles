@@ -1,5 +1,8 @@
 .emacs.d/*
 !.emacs.d/init.el
+!.emacs.d/bibliography.el
 
 .config/fish/*
 !.config/fish/config.fish
+
+!bashrc
