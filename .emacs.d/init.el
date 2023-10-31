@@ -225,11 +225,11 @@
 	'(( :name "Unread messages"
 	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) AND flag:unread AND NOT from:linkedin AND NOT from:glassdoor"
 	    :key ?u)
-	  ( :name  "Unread messages Posteo"
-	    :query "maildir:/Posteo/Inbox and flag:unread"
+	  ( :name  "Posteo messages"
+	    :query "maildir:/Posteo/Inbox and NOT from:glassdoor"
 	    :key ?p)
-	  ( :name "CRG unread messages"
-	    :query "maildir:/CRG/Inbox and flag:unread and NOT from:LinkedIn AND NOT from:glassdoor"
+	  ( :name "CRG messages"
+	    :query "maildir:/CRG/Inbox and NOT from:LinkedIn AND NOT from:glassdoor"
 	    :key ?c)
 	  ( :name "Today's messages"
 	    :query "(maildir:/CRG/Inbox or maildir:/Posteo/Inbox) and date:today..now AND NOT from:linkedin AND NOT from:glassdoor"
@@ -365,7 +365,7 @@
 (advice-add 'move-text-down :after 'indent-region-advice)
 
 ;;Call custom file with bibliography packages and configuraion
-(setq bibliography-file (concat user-emacs-directory "/bibliography.el"))
+(setq bibliography-file (concat user-emacs-directory "bibliography.el"))
 (load-file bibliography-file)
 
 ;(use-package pubmed
