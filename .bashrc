@@ -39,4 +39,4 @@ alias mv='mv -i'
 
 PS1='[\u@\h \W]\$ '
 
-eval "$(starship init bash)"
+##eval "$(starship init bash)"

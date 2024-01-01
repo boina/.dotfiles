@@ -2,8 +2,6 @@ if status is-interactive
 neofetch
 end
 
-starship init fish | source
-
 # Changing "ls" to "exa"
 alias ls='exa -l --color=always --group-directories-first' # my preferred listing
 alias la='exa -al --color=always --group-directories-first'  # all files and dirs
