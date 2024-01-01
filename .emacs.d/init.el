@@ -9,12 +9,15 @@
 
 (setq visible-bell t)       ; Set up the visible bell
 
+;(load-theme 'modus-vivendi)
+
 (load-theme 'wombat)
+
 
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
   (message "Setting faces.")
-  (set-face-attribute 'default nil :font "Fira Code Retina" :height 115))
+    (set-face-attribute 'default nil :font "Fira Code Retina" :height 110))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -106,7 +109,7 @@
   (doom-modeline-mode 1)
   :config
   (setq doom-modeline-minor-modes 1
-	doom-modeline-height 30))
+	doom-modeline-height 40))
 
 
 ;;Function to allow exteranl programs to acces emacs gpg files
@@ -309,12 +312,16 @@
 
 (use-package vertico
   :ensure t
-    :custom
+  :custom
   (vertico-cycle t)
   :custom-face
   (vertico-current ((t (:background "#3a3f5a"))))
   :init
   (vertico-mode))
+
+(use-package vertico-quick
+  :after vertico
+  :ensure nil)
 
 (use-package orderless
   :ensure t
