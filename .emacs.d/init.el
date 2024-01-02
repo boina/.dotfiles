@@ -13,7 +13,6 @@
 
 (load-theme 'wombat)
 
-
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
   (message "Setting faces.")
@@ -36,6 +35,11 @@
 ;;Revert buffers when the file changes in the disk
 (global-auto-revert-mode 1)
 
+;; Don't ask me what to do when opening symbolic links. Follow the link.
+(setq vc-follow-symlinks 1)
+
+;; Custom key bindings
+(global-set-key (kbd "C-+") 'indent-region)
 
 ;; Initialize package sources
 (require 'package)
