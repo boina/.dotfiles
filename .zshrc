@@ -42,9 +42,13 @@ setopt hist_ignore_dups
 zstyle ':completion:*' menu select
 
 # Load plugins
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ "$(cat /etc/issue)"  == *Debian* ]]; then
+    source /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh; else
+    source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh; fi
 
 # Options for history substring search plugin
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=white,fg=red,bold'
