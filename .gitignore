@@ -5,4 +5,9 @@
 .config/fish/*
 !.config/fish/config.fish
 
+.moc/*
+!config
+!themes
+!equalizer
+
 !bashrc
