@@ -514,15 +514,28 @@
 	  "~/OrgFiles/Mail.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
-  	  "~/OrgFiles/Workout.org"
-          "~/Labo/PD_Malhotra_CRG/Projects/Mucin sorting/Mucin tagging/MucinFluorescentTagging.org"))
+  	  "~/OrgFiles/Workout.org"))
   (setq org-agenda-custom-commands
-	'(("d" "What's up for today?"
-	   ((alltodo "" ((org-agenda-overriding-header "Para no olvidarme lo que tengo que hacer")))
- 	    (agenda  "" ((org-agenda-span 1) (org-agenda-overriding-header "Agenda de hoy")))))
+	'(("d" "Today's agenda."
+	   ((tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "Important tasks\n")))
+ 	    (agenda  "" ((org-agenda-span 1) (org-agenda-overriding-header "\nToday's agenda\n")
+ 			 (org-agenda-time-grid   '((daily today require-timed)
+						   (800 1000 1200 1400 1600 1800 2000 2200)
+						   "......"
+						   "----------------"))
+			 (org-deadline-warning-days 0)
+			 (org-deadline-past-days 0)
+			 (org-scheduled-past-days 0)
+			 (org-agenda-day-face-function (lambda (date) '(org-agenda-date bold)))
+			 (org-agenda-format-date "%A %-e de %B del %Y")))
+	    (tags-todo "+PRIORITY=\"B\"" ((org-agenda-overriding-header "\nOther tasks\n")))))
 	  ("w" "And the week?"
-	   ((alltodo "" ((org-agenda-overriding-header "Para no olvidarme lo que tengo que hacer")))
-	    (agenda  "" ((org-agenda-overriding-header "Agenda de la semana")))))))
+	   ((tags-todo "+PRIORITY=\"A\"|+PRIORITY=\"B\"" ((org-agenda-overriding-header "Tasks")))
+	    (agenda  "" ((org-agenda-overriding-header "\nAgenda for the next ten days\n")
+			 (org-agenda-span 10)
+			 (org-agenda-time-grid nil)
+			 (org-deadline-warning-days 0)
+			 (org-deadline-past-days 0)))))))
   (setq org-capture-templates
 	'(("t" "Tasks")
 	  ("tp" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Personal")
