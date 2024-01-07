@@ -515,6 +515,29 @@
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
   	  "~/OrgFiles/Workout.org"))
+  (setq calendar-holidays
+	'(
+	  ;; State holidays
+	  (holiday-fixed 1 1 "Fiesta Nacional: New Year")
+	  (holiday-fixed 1 6 "Fiesta Nacional: Dia de Reyes/Epifania")
+	  (holiday-fixed 5 1 "Fiesta Nacional: International Labor Day")
+	  (holiday-fixed 5 24 "Fiesta Nacional: Segunda Pascua")
+	  (holiday-fixed 6 24 "Fiesta Nacional: San Juan")
+	  (holiday-fixed 8 15 "Fiesta Nacional: Asuncion de la Virgen")
+	  (holiday-fixed 10 12 "Fiesta Nacional: Dia de la Hispanidad")
+	  (holiday-fixed 11 1 "Fiesta Nacional: Todos los Santos")
+	  (holiday-fixed 12 6 "Fiesta Nacional: Dia de la Constitucion")
+	  (holiday-fixed 12 8 "Fiesta Nacional: Inmaculada Concepcion")
+	  (holiday-fixed 12 25 "Fiesta Nacional: Catholic Christmas")
+	  ;; floated holidays       
+	  (holiday-easter-etc  -2 "Fiesta Nacional: Viernes Santo")
+	  (holiday-easter-etc  0 "Domingo de Ramos")
+	  (holiday-easter-etc  1 "Fiesta Local: Lunes de Pascua Florida")
+	  (holiday-easter-etc 50 "Fiesta Local: Lunes de Pascua granada:Lunes de pentecostes")
+	  ;; Cataluyna holidays
+	  (holiday-fixed 9 11 "Fiesta Local: Diada de Catalunya")
+	  (holiday-fixed 9 24 "Fiesta Local: La Merced Barcelona")
+	  (holiday-fixed 12 26 "Fiesta Local: San Esteban")))
   (setq org-agenda-custom-commands
 	'(("d" "Today's agenda."
 	   ((tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "Important tasks\n")))
@@ -535,7 +558,8 @@
 			 (org-agenda-span 10)
 			 (org-agenda-time-grid nil)
 			 (org-deadline-warning-days 0)
-			 (org-deadline-past-days 0)))))))
+			 (org-deadline-past-days 0)
+			 (org-agenda-include-diary t)))))))
   (setq org-capture-templates
 	'(("t" "Tasks")
 	  ("tp" "Task" entry (file+olp "~/OrgFiles/Tasks.org" "Personal")
