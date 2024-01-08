@@ -511,6 +511,7 @@
 	org-agenda-files
 	'("~/OrgFiles/Tasks.org"
 	  "~/OrgFiles/Agenda.org"
+	  "~/OrgFiles/Agendo.org"
 	  "~/OrgFiles/Mail.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  "~/OrgFiles/TrainingForClimbing.org"
