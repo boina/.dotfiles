@@ -452,9 +452,15 @@
 
 (global-set-key (kbd "TAB") 'minibuffer-complete)
 
+;;Global key bindings to wrap around selected text with parenthesis, brackets or curly brackets.
+(global-set-key (kbd "C-x w [") 'sp-wrap-square)
+(global-set-key (kbd "C-x w {") 'sp-wrap-curly)
+(global-set-key (kbd "C-x w 8") 'sp-wrap-round)
+(global-set-key (kbd "C-x w u") 'sp-unwrap-sexp)
+
 (use-package expand-region
   :ensure t
-  :bind ("C-]"  . er/expand-region))
+  :bind ("C-M-+"  . er/expand-region))
 
 (use-package ess
   :mode ("\\.R\\'" . R-mode))
