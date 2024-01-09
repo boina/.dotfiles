@@ -456,6 +456,7 @@
 (global-set-key (kbd "C-x w [") 'sp-wrap-square)
 (global-set-key (kbd "C-x w {") 'sp-wrap-curly)
 (global-set-key (kbd "C-x w 8") 'sp-wrap-round)
+(global-set-key (kbd "C-x w w") 'sp-rewrap-sexp)
 (global-set-key (kbd "C-x w u") 'sp-unwrap-sexp)
 
 (use-package expand-region
