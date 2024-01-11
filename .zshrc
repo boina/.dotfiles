@@ -41,6 +41,9 @@ setopt hist_ignore_dups
 
 zstyle ':completion:*' menu select
 
+# correct if completion is no possible
+zstyle ':completion:*' completer _complete _approximate
+
 # Load plugins
 if [[ "$(cat /etc/issue)"  == *Debian* ]]; then
     source /usr/share/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -49,6 +52,8 @@ if [[ "$(cat /etc/issue)"  == *Debian* ]]; then
     source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh; fi
+
+
 
 # Options for history substring search plugin
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=white,fg=red,bold'
