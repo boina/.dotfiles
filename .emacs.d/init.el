@@ -41,6 +41,15 @@
 ;; Custom key bindings
 (global-set-key (kbd "C-+") 'indent-region)
 
+;; Custom Functions
+(defun jw/switch-to-buffer-other-window-keep-point (buffer)
+  "Split window and open buffer but keep point."
+  (interactive "b")
+  (save-excursion (switch-to-buffer-other-window buffer)
+		  (other-window 1)))
+
+(global-set-key (kbd "C-x 4 n") 'jw/switch-to-buffer-other-window-keep-point)
+
 ;; Initialize package sources
 (require 'package)
 
@@ -521,7 +530,7 @@
 	  "~/OrgFiles/Agendo.org"
 	  "~/OrgFiles/Mail.org"
 	  ;;"~/OrgFiles/Habits.org"
-	  "~/OrgFiles/TrainingForClimbing.org"
+	  ;;"~/OrgFiles/TrainingForClimbing.org"
   	  "~/OrgFiles/Workout.org"))
   (setq calendar-holidays
 	'(
