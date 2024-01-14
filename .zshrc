@@ -63,7 +63,7 @@ bindkey '^[^N' history-substring-search-down
 
 # Options for autosuggestions plugin
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=\'fg=60\'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=15,bg=23"
 
 # Load powerlevel theme
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
