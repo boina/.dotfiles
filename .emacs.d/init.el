@@ -40,6 +40,8 @@
 
 ;; Custom key bindings
 (global-set-key (kbd "C-+") 'indent-region)
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "C-c e") 'mu4e)
 
 ;; Custom Functions
 (defun jw/switch-to-buffer-other-window-keep-point (buffer)
@@ -91,6 +93,21 @@
 
 
 (setq set-mark-command-repeat-pop t)
+
+;;Watch youtube videos in emacs with yeetube and mpv
+(use-package yeetube
+  :init (define-prefix-command 'my/yeetube-map)
+  :config
+  (setf yeetube-display-thumbnails nil) 
+  :bind (("C-c y" . 'my/yeetube-map)
+         :map my/yeetube-map
+	 ("s" . 'yeetube-search)
+	 ("b" . 'yeetube-play-saved-video)
+	 ("d" . 'yeetube-download-videos)
+	 ("p" . 'yeetube-mpv-toggle-pause)
+	 ("v" . 'yeetube-mpv-toggle-video)
+	 ("V" . 'yeetube-mpv-toggle-no-video-flag)
+	 ("k" . 'yeetube-remove-saved-video)))
 
 
 ;;Avy configuration
@@ -317,6 +334,29 @@
 		dired-omit-files "\\.[^.].*")
   :hook (diredfl-mode))
 
+(setq find-name-arg "-iname")
+
+
+(use-package activities
+  :init
+  (activities-mode)
+  (activities-tabs-mode)
+  ;; Prevent `edebug' default bindings from interfering.
+  (setq edebug-inhibit-emacs-lisp-mode-bindings t)
+
+  :bind
+  (("C-x C-a C-n" . activities-new)
+   ;; As resuming is expected to be one of the most commonly used
+   ;; commands, this binding is one of the easiest to press.
+   ("C-x C-a C-a" . activities-resume)
+   ("C-x C-a C-s" . activities-suspend)
+   ("C-x C-a C-k" . activities-kill)
+   ;; This binding mirrors, e.g. "C-x t RET".
+   ("C-x C-a RET" . activities-switch)
+   ("C-x C-a g" . activities-revert)
+   ("C-x C-a l" . activities-list)))
+
+
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
@@ -517,7 +557,8 @@
 	  "~/OrgFiles/Mail.org"
 	  ;;"~/OrgFiles/Habits.org"
 	  ;;"~/OrgFiles/TrainingForClimbing.org"
-  	  "~/OrgFiles/Workout.org"))
+  	  "~/OrgFiles/Workout.org"
+	  "~/OrgFiles/TimeBlock.org"))
   (setq calendar-holidays
 	'(
 	  ;; State holidays
@@ -541,6 +582,8 @@
 	  (holiday-fixed 9 11 "Fiesta Local: Diada de Catalunya")
 	  (holiday-fixed 9 24 "Fiesta Local: La Merced Barcelona")
 	  (holiday-fixed 12 26 "Fiesta Local: San Esteban")))
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "FOLLOW(f)" "|" "CANCELLED(c)" "DONE(d)")))
   (setq org-agenda-custom-commands
 	'(("d" "Today's agenda."
 	   ((tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "Important tasks\n")))
@@ -586,6 +629,10 @@
            "* %?%:subject %(org-set-tags \"personal\")\n%^t\n\n%i\ne-mail: %a")
 	  ("ew" "Agenda Work" entry (file+olp "~/OrgFiles/Agenda.org" "Work")
            "* %?%:subject %(org-set-tags \"work\")\n%^t\n\n%i\ne-mail: %a"))))
+
+
+(setq org-timeblock-span 7)
+
 
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
@@ -770,3 +817,4 @@
 
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
