@@ -439,20 +439,6 @@
 (advice-add 'move-text-up :after 'indent-region-advice)
 (advice-add 'move-text-down :after 'indent-region-advice)
 
-;;Call custom file with bibliography packages and configuraion
-(setq bibliography-file (concat user-emacs-directory "bibliography.el"))
-(load-file bibliography-file)
-
-;(use-package pubmed
-;  :ensure t
-;  :requires (pubmed-unpaywall pubmed-springer pubmed-dissemin pubmed-scihub)
-;  :commands (pubmed-search pubmed-advanced-search pubmed-save-as)
-; :config (setq  pubmed-api-key "38d4a4ce6747c1739bde2131977303e68208"
-;		 pubmed-unpaywall-email "jose.wo@posteo.net"
-    ;		 pubmed-springer-api-key "de01e8e321cb8812995b54d180ed2cec"
-;		 pubmed-scihub-url "https://sci-hub.st/"
-;		 pubmed-fulltext-functions '(pubmed-pmc pubmed-unpaywall pubmed-scihub pubmed-dissemin pubmed-openaccessbutton)))
-
 
 ;;(use-package ivy
 ;;  :diminish
@@ -696,6 +682,21 @@
          ("C-c n g"   . org-roam-graph))
   :config
   (org-roam-setup))
+
+;;Call custom file with bibliography packages and configuraion
+(setq bibliography-file (concat user-emacs-directory "bibliography.el"))
+(load-file bibliography-file)
+
+;(use-package pubmed
+;  :ensure t
+;  :requires (pubmed-unpaywall pubmed-springer pubmed-dissemin pubmed-scihub)
+;  :commands (pubmed-search pubmed-advanced-search pubmed-save-as)
+; :config (setq  pubmed-api-key "38d4a4ce6747c1739bde2131977303e68208"
+;		 pubmed-unpaywall-email "jose.wo@posteo.net"
+    ;		 pubmed-springer-api-key "de01e8e321cb8812995b54d180ed2cec"
+;		 pubmed-scihub-url "https://sci-hub.st/"
+;		 pubmed-fulltext-functions '(pubmed-pmc pubmed-unpaywall pubmed-scihub pubmed-dissemin pubmed-openaccessbutton)))
+
 
 
 ;;:hook
