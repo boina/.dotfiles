@@ -1,0 +1,11 @@
+#Custom key bindings
+history_up += ^p
+menu_up += ^p
+menu_page_up += ^v
+
+history_down += ^n
+menu_down += ^n
+menu_page_down += M-v
+
+seek_forward          += M-n
+seek_backward         += M-p
