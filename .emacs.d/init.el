@@ -109,12 +109,27 @@
 	 ("V" . 'yeetube-mpv-toggle-no-video-flag)
 	 ("k" . 'yeetube-remove-saved-video)))
 
+;;RSS feed with elfeed
+(use-package elfeed
+  :ensure t
+  :config
+  (setq elfeed-feeds
+	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
+	("https://pubmed.ncbi.nlm.nih.gov/rss/search/1xmNDPKH2s0LDwdh2s5Ci1RexI8zypeU8iNmwSnJJSfnh09gUX/?limit=20&utm_campaign=pubmed-2&fc=20240324134054" Tspan8)))
+  (setq elfeed-search-title-max-width 120)
+  (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
+
+(global-set-key (kbd "C-c w") 'elfeed)
+
+
+
 
 ;;Avy configuration
-(use-package avy)
-(global-set-key (kbd "C-:") 'avy-goto-char)
-(global-set-key (kbd "C-,") 'avy-goto-char-2)
-(global-set-key (kbd "C-.") 'avy-goto-word-1)
+(use-package avy
+  :ensure t)
+(global-set-key (kbd "C-c :") 'avy-goto-char)
+(global-set-key (kbd "C-c ,") 'avy-goto-char-2)
+(global-set-key (kbd "C-c .") 'avy-goto-word-1)
 
 ;;Use pdf-tools for reading pdfs in emacs
 (use-package pdf-tools
