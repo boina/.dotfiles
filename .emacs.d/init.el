@@ -96,6 +96,7 @@
 
 ;;Watch youtube videos in emacs with yeetube and mpv
 (use-package yeetube
+  :ensure t
   :init (define-prefix-command 'my/yeetube-map)
   :config
   (setf yeetube-display-thumbnails nil) 
