@@ -1,3 +1,6 @@
 #Theme = green_theme
 Theme =green_theme_custom
 MusicDir        = "$HOME/Música"
+
+
+Keymap = "mocp_keymap"
