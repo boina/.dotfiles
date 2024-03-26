@@ -39,7 +39,7 @@
 			     ("Entry Key" 20 t))))
   (setq ebib-index-default-sort '("Year" . descend))  ; alternatively `ascend'
   (setq ebib-file-search-dirs '("~/Labo/Papers_Database/JW_PapersDB_VM/"))
-  (setq ebib-file-associations '(("pdf" . "evince")))
+  (setq ebib-file-associations '(()))
   (defun my-ebib-file-name-transform (file direction)
     "Modify FILE for JabRef."
     (if direction
