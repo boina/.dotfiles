@@ -6,7 +6,7 @@
 (setq ebib-bibtex-dialect 'biblatex)
 
 (setq bibtex-completion-bibliography
-      '("~/Labo/Papers_Database/JW_BibliographyVM.bib")
+      '("~/Labo/Papers_Database/JW_BibliographyVM.bib"))
 (setq bibtex-completion-library-path '("~/Labo/Papers_Database/JW_PapersDB_VM/"))
 (setq bibtex-completion-pdf-field "file")
 ;;(setq ivy-re-builders-alist
