@@ -43,14 +43,6 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "C-c e") 'mu4e)
 
-;;;; Custom Functions
-;;(defun jw/switch-to-buffer-other-window-keep-point (buffer)
-;;  "Split window and open buffer but keep point."
-;;  (interactive "b")
-;;  (save-excursion (switch-to-buffer-other-window buffer)
-;;		  (other-window 1)))
-
-;;(global-set-key (kbd "C-x 4 n") 'jw/switch-to-buffer-other-window-keep-point)
 
 ;; Initialize package sources
 (require 'package)
@@ -154,7 +146,7 @@
   :init
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-minor-modes 1
+  (setq doom-modeline-minor-modes nil
 	doom-modeline-height 40))
 
 
@@ -173,7 +165,10 @@
 ;;(setq gptel-api-key (gptel-api-key-from-auth-source)))
 
 ;;Find synonyms
-;(use-package synonymous)
+(use-package powerthesaurus
+  :ensure t)
+
+(global-set-key (kbd "C-c t") 'powerthesaurus-lookup-dwim)
 
 ;;Email
 (use-package mu4e
@@ -335,7 +330,19 @@
 
 ;;Write emails in html
 (use-package org-mime
-  :ensure t)
+  :ensure t
+  :config
+  (setq org-mime-export-options '(:section-numbers nil
+				:with-author nil
+				:with-toc nil))
+
+  (add-hook 'message-send-hook 'org-mime-htmlize)
+
+  (add-hook 'org-mime-html-hook
+          (lambda ()
+            (org-mime-change-element-style
+            "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+                          "#E6E1DC" "#232323")))))
 
 
 
