@@ -335,7 +335,19 @@
 
 ;;Write emails in html
 (use-package org-mime
-  :ensure t)
+  :ensure t
+  :config
+  (setq org-mime-export-options '(:section-numbers nil
+				:with-author nil
+				:with-toc nil))
+
+  (add-hook 'message-send-hook 'org-mime-htmlize)
+
+  (add-hook 'org-mime-html-hook
+          (lambda ()
+            (org-mime-change-element-style
+            "pre" (format "color: %s; background-color: %s; padding: 0.5em;"
+                          "#E6E1DC" "#232323")))))
 
 
 
