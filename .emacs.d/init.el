@@ -154,7 +154,7 @@
   :init
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-minor-modes 1
+  (setq doom-modeline-minor-modes nil
 	doom-modeline-height 40))
 
 
