@@ -167,13 +167,16 @@
 
 
 ;;ChatGPT GPTel Chatgpt client for emacs
-(use-package gptel
-  :ensure t
-  :config
-  (setq gptel-api-key (gptel-api-key-from-auth-source)))
+;;(use-package gptel
+;;  :ensure t
+;;  :config
+;;  (setq gptel-api-key (gptel-api-key-from-auth-source)))
 
 ;;Find synonyms
-(use-package synonymous)
+(use-package powerthesaurus
+  :ensure t)
+
+(global-set-key (kbd "C-c t") 'powerthesaurus-lookup-dwim)
 
 ;;Email
 (use-package mu4e
