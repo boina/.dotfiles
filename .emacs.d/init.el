@@ -43,14 +43,14 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "C-c e") 'mu4e)
 
-;; Custom Functions
-(defun jw/switch-to-buffer-other-window-keep-point (buffer)
-  "Split window and open buffer but keep point."
-  (interactive "b")
-  (save-excursion (switch-to-buffer-other-window buffer)
-		  (other-window 1)))
+;;;; Custom Functions
+;;(defun jw/switch-to-buffer-other-window-keep-point (buffer)
+;;  "Split window and open buffer but keep point."
+;;  (interactive "b")
+;;  (save-excursion (switch-to-buffer-other-window buffer)
+;;		  (other-window 1)))
 
-(global-set-key (kbd "C-x 4 n") 'jw/switch-to-buffer-other-window-keep-point)
+;;(global-set-key (kbd "C-x 4 n") 'jw/switch-to-buffer-other-window-keep-point)
 
 ;; Initialize package sources
 (require 'package)
@@ -110,17 +110,17 @@
 	 ("V" . 'yeetube-mpv-toggle-no-video-flag)
 	 ("k" . 'yeetube-remove-saved-video)))
 
-;;RSS feed with elfeed
-(use-package elfeed
-  :ensure t
-  :config
-  (setq elfeed-feeds
-	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
-	("https://pubmed.ncbi.nlm.nih.gov/rss/search/1xmNDPKH2s0LDwdh2s5Ci1RexI8zypeU8iNmwSnJJSfnh09gUX/?limit=20&utm_campaign=pubmed-2&fc=20240324134054" Tspan8)))
-  (setq elfeed-search-title-max-width 120)
-  (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
-
-(global-set-key (kbd "C-c w") 'elfeed)
+;;;;RSS feed with elfeed
+;;(use-package elfeed
+;;  :ensure t
+;;  :config
+;;  (setq elfeed-feeds
+;;	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
+;;	("https://pubmed.ncbi.nlm.nih.gov/rss/search/1xmNDPKH2s0LDwdh2s5Ci1RexI8zypeU8iNmwSnJJSfnh09gUX/?limit=20&utm_campaign=pubmed-2&fc=20240324134054" Tspan8)))
+;;  (setq elfeed-search-title-max-width 120)
+;;  (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
+;;
+;;(global-set-key (kbd "C-c w") 'elfeed)
 
 
 
@@ -167,13 +167,13 @@
 
 
 ;;ChatGPT GPTel Chatgpt client for emacs
-(use-package gptel
-  :ensure t
-  :config
-  (setq gptel-api-key (gptel-api-key-from-auth-source)))
+;;(use-package gptel
+;;  :ensure t
+;;  :config
+;;(setq gptel-api-key (gptel-api-key-from-auth-source)))
 
 ;;Find synonyms
-(use-package synonymous)
+;(use-package synonymous)
 
 ;;Email
 (use-package mu4e
@@ -342,15 +342,17 @@
 ;;Dired configuration
 (use-package dired
   :ensure nil
-  :commands (dired dired-jump)
-  :config (setq dired-kill-when-opening-new-dired-buffer 1
-		dired-dwim-target 1
-		delete-by-moving-to-trash 1
-		dired-listing-switches "-lgh --group-directories-first"
-		dired-omit-files "\\.[^.].*")
+  :config
+  (require 'dired-x)
+  (setq dired-kill-when-opening-new-dired-buffer 1
+	dired-dwim-target 1
+	delete-by-moving-to-trash 1
+	dired-listing-switches "-lgh --group-directories-first"
+	dired-omit-files "\\.[^.].*")
   :hook (diredfl-mode))
 
 (setq find-name-arg "-iname")
+
 
 
 (use-package activities
@@ -474,6 +476,7 @@
 ;;  (counsel-mode 1)
 ;;  (setq ivy-initial-inputs-alist nil))
 ;;
+
 ;;(use-package ivy-prescient
 ;;  :after counsel
 ;;  :custom
@@ -538,8 +541,8 @@
 (defun text-mode-setup ()
   (visual-line-mode 1)
   (flyspell-mode 1)
-  (company-mode -1))
-  ;;(flyspell-buffer))
+  (company-mode -1)
+  (flyspell-buffer))
 
 (add-hook 'text-mode-hook 'text-mode-setup)
 
