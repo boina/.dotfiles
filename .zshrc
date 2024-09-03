@@ -73,3 +73,6 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 
 export LS_COLORS="$(vivid generate $HOME/.dotfiles/LS_COLOR_Themes/catppuccin-mocha.yml)"
+
+
+export EDITOR=nano
