@@ -102,19 +102,23 @@
 	 ("V" . 'yeetube-mpv-toggle-no-video-flag)
 	 ("k" . 'yeetube-remove-saved-video)))
 
-;;;;RSS feed with elfeed
-;;(use-package elfeed
-;;  :ensure t
-;;  :config
-;;  (setq elfeed-feeds
-;;	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
-;;	("https://pubmed.ncbi.nlm.nih.gov/rss/search/1xmNDPKH2s0LDwdh2s5Ci1RexI8zypeU8iNmwSnJJSfnh09gUX/?limit=20&utm_campaign=pubmed-2&fc=20240324134054" Tspan8)))
-;;  (setq elfeed-search-title-max-width 120)
-;;  (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
-;;
-;;(global-set-key (kbd "C-c w") 'elfeed)
+;;RSS feed with elfeed
+(use-package elfeed
+  :ensure t
+  :config
+  (setq elfeed-feeds
+	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
+	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1XigQ8Atc1EM7s1gj0F9R43DUx6icFEXNHE7_t2eM8pST9icKm/?limit=15&utm_campaign=pubmed-2&fc=20240902110758" Tspan8)
+	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1FQ_Hz0ueKYrijPaRUpMMQuYAYxoWeGMFRRH-0rfCObDF-xEps/?limit=15&utm_campaign=pubmed-2&fc=20240902110510" Tspan3)
+	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1zSVwQViw4hqkZqSLMwenjWRxtjin29VO1t49N4USbVyqxhMJ8/?limit=20&utm_campaign=pubmed-2&fc=20240903072709" ERES)))
+  (setq elfeed-search-title-max-width 180)
+  (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
 
+(defun line-spacing-hook ()
+  (setq line-spacing 6))
+(add-hook 'elfeed-search-mode-hook 'line-spacing-hook)
 
+(global-set-key (kbd "C-c w") 'elfeed)
 
 
 ;;Avy configuration
