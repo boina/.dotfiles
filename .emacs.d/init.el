@@ -110,13 +110,15 @@
 	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" Mucin)
 	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1XigQ8Atc1EM7s1gj0F9R43DUx6icFEXNHE7_t2eM8pST9icKm/?limit=15&utm_campaign=pubmed-2&fc=20240902110758" Tspan8)
 	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1FQ_Hz0ueKYrijPaRUpMMQuYAYxoWeGMFRRH-0rfCObDF-xEps/?limit=15&utm_campaign=pubmed-2&fc=20240902110510" Tspan3)
-	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1zSVwQViw4hqkZqSLMwenjWRxtjin29VO1t49N4USbVyqxhMJ8/?limit=20&utm_campaign=pubmed-2&fc=20240903072709" ERES)))
+	  ("https://pubmed.ncbi.nlm.nih.gov/rss/search/1zSVwQViw4hqkZqSLMwenjWRxtjin29VO1t49N4USbVyqxhMJ8/?limit=20&utm_campaign=pubmed-2&fc=20240903072709" ERES)
+	  ("http://connect.biorxiv.org/biorxiv_xml.php?subject=cell_biology" bioRxiv CellBiology)))
   (setq elfeed-search-title-max-width 180)
   (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
 
-(defun line-spacing-hook ()
-  (setq line-spacing 6))
-(add-hook 'elfeed-search-mode-hook 'line-spacing-hook)
+(use-package elfeed-goodies
+  :ensure t)
+
+(elfeed-goodies/setup)
 
 (global-set-key (kbd "C-c w") 'elfeed)
 
