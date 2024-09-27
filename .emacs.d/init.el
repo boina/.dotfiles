@@ -102,6 +102,11 @@
 	 ("V" . 'yeetube-mpv-toggle-no-video-flag)
 	 ("k" . 'yeetube-remove-saved-video)))
 
+
+;;Defatult external web browser
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
+
 ;;RSS feed with elfeed
 (use-package elfeed
   :ensure t
@@ -369,6 +374,7 @@
 
 
 (use-package activities
+  :ensure t
   :init
   (activities-mode)
   (activities-tabs-mode)
@@ -389,6 +395,7 @@
 
 
 (use-package which-key
+  :ensure t
   :init (which-key-mode)
   :diminish which-key-mode
   :config
