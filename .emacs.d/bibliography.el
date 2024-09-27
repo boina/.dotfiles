@@ -28,6 +28,7 @@
 ;; Ebib - Biblatex manager
 (use-package ebib
   :config
+  (setq ebib-index-window-size 20)
   (setq ebib-file-name-mod-function 'my-ebib-file-name-transform)
   (setq ebib-filename-separator ";")
   (setq ebib-preload-bib-files '("~/Labo/Papers_Database/JW_BibliographyVM.bib"))
@@ -51,14 +52,27 @@
             (car data)
           (cl-second data))))))
 
+;;Wrap lines in the entry buffer. This I like to keep the abstract readable.
+(add-hook 'ebib-entry-mode-hook #'visual-line-mode)
+
+;;Change the orther of entries in the entry buffer
+(custom-set-variables
+ '(bibtex-biblatex-entry-alist
+   '(("Article" "Article in Journal"
+      (("author"))
+      (("title")
+       nil
+       ("journaltitle")
+       ("date"))
+      (("abstract"))))))
 
 ;;Ebibi biblio support
-(use-package biblio)
+(use-package biblio
+  :ensure t)
 
-(require 'ebib-biblio)
-(define-key biblio-selection-mode-map (kbd "e") #'ebib-biblio-selection-import)
-
-;(use-package ebib-biblio
-;  :after (ebib biblio)
-;  :bind (:map biblio-selection-mode-map
-;              ("e" . ebib-biblio-selection-import)))
+(use-package ebib-biblio
+  :after (ebib biblio)
+  :bind (:map ebib-index-mode-map
+              ("B" . ebib-biblio-import-doi)
+              :map biblio-selection-mode-map
+              ("e" . ebib-biblio-selection-import)))
