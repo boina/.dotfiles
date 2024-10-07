@@ -120,6 +120,24 @@
   (setq elfeed-search-title-max-width 180)
   (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
 
+(use-package citar
+  :ensure t
+  :custom
+  (citar-bibliography '("~/Labo/Papers_Database/JW_BibliographyVM.bib"))
+  (citar-library-paths '("~/Labo/Papers_Database/JW_PapersDB_VM/"))
+
+  :config
+  (setq citar-indicators
+	(list citar-indicator-files-icons
+              citar-indicator-links-icons
+              citar-indicator-notes-icons
+              citar-indicator-cited-icons)))
+
+(setq citar-indicators
+  (list citar-indicator-files-icons)) ; plain text
+        citar-indicator-notes-icons)) 
+
+
 (use-package elfeed-goodies
   :ensure t)
 
