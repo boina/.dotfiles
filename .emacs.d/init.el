@@ -120,22 +120,46 @@
   (setq elfeed-search-title-max-width 180)
   (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
 
+(require 'all-the-icons)
+
 (use-package citar
   :ensure t
   :custom
   (citar-bibliography '("~/Labo/Papers_Database/JW_BibliographyVM.bib"))
   (citar-library-paths '("~/Labo/Papers_Database/JW_PapersDB_VM/"))
-
   :config
+  (defvar citar-indicator-files-icons
+    (citar-indicator-create
+     :symbol (nerd-icons-faicon
+              "nf-fa-file_o"
+              :face 'nerd-icons-green
+              :v-adjust -0.1)
+     :function #'citar-has-files
+     :padding "  " ; need this because the default padding is too low for these icons
+     :tag "has:files"))
+  (defvar citar-indicator-links-icons
+    (citar-indicator-create
+     :symbol (nerd-icons-faicon
+              "nf-fa-link"
+              :face 'nerd-icons-orange
+              :v-adjust 0.01)
+     :function #'citar-has-links
+     :padding "  "
+     :tag "has:links"))
+  (defvar citar-indicator-notes-icons
+    (citar-indicator-create
+     :symbol (nerd-icons-codicon
+              "nf-cod-note"
+              :face 'nerd-icons-blue
+              :v-adjust -0.3)
+     :function #'citar-has-notes
+     :padding "    "
+     :tag "has:notes"))
   (setq citar-indicators
 	(list citar-indicator-files-icons
               citar-indicator-links-icons
               citar-indicator-notes-icons
-              citar-indicator-cited-icons)))
-
-(setq citar-indicators
-  (list citar-indicator-files-icons)) ; plain text
-        citar-indicator-notes-icons)) 
+              citar-indicator-cited)))
 
 
 (use-package elfeed-goodies
