@@ -104,8 +104,8 @@
 
 
 ;;Defatult external web browser
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox")
+;;(setq browse-url-browser-function 'browse-url-generic
+;;      browse-url-generic-program "firefox")
 
 ;;RSS feed with elfeed
 (use-package elfeed
