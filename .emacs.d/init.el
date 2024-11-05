@@ -9,9 +9,6 @@
 
 (setq visible-bell t)       ; Set up the visible bell
 
-;(load-theme 'modus-vivendi)
-
-(load-theme 'wombat)
 
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
@@ -72,6 +69,8 @@
 ;;Higlight current line with pulsar
 (use-package pulsar
   :ensure t
+  :bind (("C-c p" . pulsar-pulse-line)
+	 ("C-c P" . pulsar-highlight-line))
   :config
   (setq pulsar-pulse t)
   (setq pulsar-delay 0.055)
@@ -79,10 +78,6 @@
   (setq pulsar-face 'pulsar-cyan)
   (setq pulsar-highlight-face 'pulsar-green)
   (pulsar-global-mode 1))
-
-(global-set-key (kbd "C-c p") 'pulsar-pulse-line)
-(global-set-key (kbd "C-c P") 'pulsar-highlight-line)
-
 
 (setq set-mark-command-repeat-pop t)
 
@@ -103,13 +98,17 @@
 	 ("k" . 'yeetube-remove-saved-video)))
 
 
+<<<<<<< HEAD
 ;;Defatult external web browser
 ;;(setq browse-url-browser-function 'browse-url-generic
 ;;      browse-url-generic-program "firefox")
+=======
+>>>>>>> 0f820152b9b0dfb783c84f97d037c7522c0ce8eb
 
 ;;RSS feed with elfeed
 (use-package elfeed
   :ensure t
+  :bind ("C-c w" . elfeed)
   :config
   (setq elfeed-feeds
 	'(("https://pubmed.ncbi.nlm.nih.gov/rss/search/18cpB6wjstdmh5fOeH_LHYpkBlQueZvAqbyU5xXlOiV1IeWAuI/?limit=20&utm_campaign=pubmed-2&fc=20240324073238" PubMed Mucin)
@@ -120,10 +119,17 @@
   (setq elfeed-search-title-max-width 180)
   (setq elfeed-db-directory "~/Nextcloud/.elfeed/"))
 
-(require 'all-the-icons)
+(use-package elfeed-goodies
+  :ensure t
+  :after elfeed
+  :config
+  (elfeed-goodies/setup))
+
 
 (use-package citar
   :ensure t
+  :bind (("C-c b" . citar-open-files))
+  :after nerd-icons
   :custom
   (citar-bibliography '("~/Labo/Papers_Database/JW_BibliographyVM.bib"))
   (citar-library-paths '("~/Labo/Papers_Database/JW_PapersDB_VM/"))
@@ -161,21 +167,12 @@
               citar-indicator-notes-icons
               citar-indicator-cited)))
 
-
-(use-package elfeed-goodies
-  :ensure t)
-
-(elfeed-goodies/setup)
-
-(global-set-key (kbd "C-c w") 'elfeed)
-
-
 ;;Avy configuration
 (use-package avy
-  :ensure t)
-(global-set-key (kbd "C-c :") 'avy-goto-char)
-(global-set-key (kbd "C-c ,") 'avy-goto-char-2)
-(global-set-key (kbd "C-c .") 'avy-goto-word-1)
+  :ensure t
+  :bind (("C-c :" . avy-goto-char)
+	 ("C-c ," . avy-goto-char-2)
+	 ("C-c ." . avy-goto-word-1)))
 
 ;;Use pdf-tools for reading pdfs in emacs
 (use-package pdf-tools
@@ -189,18 +186,21 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
-;;(use-package company-box
-;;  :ensure t
-;;  :hook (company-mode . company-box-mode))
+;;Theme configuration
+;;(setq modus-themes-mode-line '(borderless padded))
+;;(load-theme 'modus-vivendi t)
 
-
+(load-theme 'wombat)
+;;
 (use-package doom-modeline
   :ensure t
   :init
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-minor-modes nil
+  (setq doom-modeline-major-mode-icon t
+	doom-modeline-minor-modes nil
 	doom-modeline-height 40))
+
 
 
 ;;Function to allow exteranl programs to acces emacs gpg files
@@ -217,11 +217,12 @@
 ;;  :config
 ;;(setq gptel-api-key (gptel-api-key-from-auth-source)))
 
+
 ;;Find synonyms
 (use-package powerthesaurus
-  :ensure t)
+  :ensure t
+  :bind ("C-c t" . powerthesaurus-lookup-dwim))
 
-(global-set-key (kbd "C-c t") 'powerthesaurus-lookup-dwim)
 
 ;;Email
 (use-package mu4e
@@ -582,8 +583,8 @@
 (use-package ess
   :mode ("\\.R\\'" . R-mode))
 
-(use-package multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(use-package multiple-cursors
+  :bind ("C-S-c C-S-c" . mc/edit-lines))
  
 (use-package smartparens
    :hook (ess-mode  . smartparens-mode)
@@ -603,8 +604,8 @@
 (defun text-mode-setup ()
   (visual-line-mode 1)
   (flyspell-mode 1)
-  (company-mode -1)
-  (flyspell-buffer))
+  (company-mode -1))
+;;(flyspell-buffer))
 
 (add-hook 'text-mode-hook 'text-mode-setup)
 

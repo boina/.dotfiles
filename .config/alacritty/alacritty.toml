@@ -152,7 +152,7 @@ mods = "Alt"
 [selection]
 save_to_clipboard = false
 
-[shell]
+[terminal.shell]
 program = "/usr/bin/zsh"
 
 [window]
