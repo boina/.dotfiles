@@ -1,6 +1,9 @@
 configuration {
   display-drun: "Applications:";
   display-window: "Windows:";
+  display-filebrowser: "Open file";
+  filebrowser {
+     directory: "/home/netlak/";}
   drun-display-format: "{name} - {comment}";
   font: "JetBrainsMono Nerd Font Medium 14";
   icon-theme: "Papirus";
@@ -66,7 +69,7 @@ inputbar {
 listview {
   background-color: @bg;
   columns: 1;
-  lines: 10;
+  lines: 6;
 }
 
 mainbox {
