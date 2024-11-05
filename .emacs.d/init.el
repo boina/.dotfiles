@@ -98,13 +98,6 @@
 	 ("k" . 'yeetube-remove-saved-video)))
 
 
-<<<<<<< HEAD
-;;Defatult external web browser
-;;(setq browse-url-browser-function 'browse-url-generic
-;;      browse-url-generic-program "firefox")
-=======
->>>>>>> 0f820152b9b0dfb783c84f97d037c7522c0ce8eb
-
 ;;RSS feed with elfeed
 (use-package elfeed
   :ensure t
