@@ -98,7 +98,6 @@
 	 ("k" . 'yeetube-remove-saved-video)))
 
 
-
 ;;RSS feed with elfeed
 (use-package elfeed
   :ensure t
