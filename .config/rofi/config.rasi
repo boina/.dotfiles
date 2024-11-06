@@ -73,7 +73,7 @@ listview {
 }
 
 mainbox {
-  children: [inputbar, listview];
+  children: [inputbar, message, listview];
   background-color: @bg;
 }
 
