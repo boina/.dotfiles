@@ -398,15 +398,21 @@
   :ensure nil
   :config
   (require 'dired-x)
-  (setq dired-kill-when-opening-new-dired-buffer 1
-	dired-dwim-target 1
-	delete-by-moving-to-trash 1
-	dired-listing-switches "-lgh --group-directories-first"
-	dired-omit-files "\\.[^.].*")
-  :hook (diredfl-mode))
+  (setq dired-listing-switches "-agho --group-directories-first"
+	dired-omit-files "^\\.[^.].*"
+	dired-dwim-target t
+	delete-by-moving-to-trash t
+	dired-kill-when-opening-new-dired-buffer t)
+  :hook (dired-mode . dired-omit-mode))
+
+(use-package dired-narrow
+  :ensure t
+  :after dired
+  :bind (:map dired-mode-map
+	      ("M-s s" . dired-narrow-regexp)
+	      ("M-s S" . dired-narrow-fuzzy)))
 
 (setq find-name-arg "-iname")
-
 
 
 (use-package activities
@@ -477,6 +483,7 @@
   :bind (("C-s" . consult-line)
          ("C-M-l" . consult-imenu)
          ("C-M-j" . persp-switch-to-buffer*)
+	 ("M-g g" . consult-goto-line)
          :map minibuffer-local-map
          ("C-r" . consult-history))
   ;;  :custom
