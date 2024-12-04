@@ -55,6 +55,7 @@
 (column-number-mode)
 (global-display-line-numbers-mode 1)
 
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
@@ -163,9 +164,8 @@
 ;;Avy configuration
 (use-package avy
   :ensure t
-  :bind (("C-c :" . avy-goto-char)
-	 ("C-c ," . avy-goto-char-2)
-	 ("C-c ." . avy-goto-word-1)))
+  :bind (("C-c j" . avy-goto-char-timer)
+	 ("C-c k" . avy-goto-word-1)))
 
 ;;Use pdf-tools for reading pdfs in emacs
 (use-package pdf-tools
