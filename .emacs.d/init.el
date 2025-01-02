@@ -232,6 +232,8 @@
   (setq mu4e-compose-format-flowed t)
 
   (setq shr-color-visible-luminance-min 60)
+  (setq shr-max-image-proportion 0.5)
+  (setq shr-width 80)
   
   (setq message-kill-buffer-on-exit t) 
   (setq mu4e-view-show-images t)
