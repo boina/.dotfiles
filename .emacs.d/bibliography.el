@@ -56,15 +56,29 @@
 (add-hook 'ebib-entry-mode-hook #'visual-line-mode)
 
 ;;Change the orther of entries in the entry buffer
-(custom-set-variables
- '(bibtex-biblatex-entry-alist
-   '(("Article" "Article in Journal"
-      (("author"))
-      (("title")
-       nil
-       ("journaltitle")
-       ("date"))
-      (("abstract"))))))
+;;(custom-set-variables
+;; '(bibtex-biblatex-entry-alist
+;;   '(("Article" "Article in Journal"
+;;      (("author")
+;;       ("title")
+;;       ("journaltitle")
+;;       ("date"))
+;;      (("abstract"))))))
+;;
+
+;;(custom-set-variables
+;; '(bibtex-BibTeX-entry-alist
+;;   '(("Article" "Article in Journal"
+;;      (("keywords")
+;;       ("author"))
+;;      (("title")
+;;       ("journaltitle")
+;;       ("shortjournal")
+;;       ("year"))
+;;      (("abstract")
+;;       ("volume")
+;;       ("number"))))))
+;;
 
 ;;Ebibi biblio support
 (use-package biblio
