@@ -8,7 +8,7 @@
 (menu-bar-mode -1)          ; Disable the menu bar
 
 (setq visible-bell t)       ; Set up the visible bell
-
+(setq large-file-warning-threshold nil)
 
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
@@ -170,8 +170,9 @@
 ;;Use pdf-tools for reading pdfs in emacs
 (use-package pdf-tools
   :ensure t
+  :magic ("%PDF" . pdf-view-mode)
   :config
-  (pdf-tools-install)
+  (pdf-tools-install :no-query)
   (setq-default pdf-view-display-size 'fit-width))
 
 (use-package company
