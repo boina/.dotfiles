@@ -495,8 +495,10 @@
   :config
   (consult-customize))
 
-(require 'move-text)
-(move-text-default-bindings)
+(use-package move-text
+  :ensure t
+  :bind (("M-p" . move-text-up)
+	 ("M-n" . move-text-down)))
 
 (defun indent-region-advice (&rest ignored)
   (let ((deactivate deactivate-mark))
