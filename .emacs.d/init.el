@@ -13,7 +13,7 @@
 ;; Function copied from https://github.com/daviwil/
 (defun set-font-faces ()
   (message "Setting faces.")
-    (set-face-attribute 'default nil :font "Fira Code Retina" :height 110))
+  (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height 120))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
@@ -67,6 +67,95 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 
+;;Theme configuration
+;;(setq modus-themes-mode-line '(borderless padded))
+;;(load-theme 'modus-vivendi t)
+
+(load-theme 'wombat)
+
+
+;;Configure modeline
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-major-mode-icon t
+	doom-modeline-minor-modes nil
+	doom-modeline-height 40))
+
+
+;; tab bar settings
+(setq tab-bar-close-button-show nil)       ;; hide tab close / X button
+(setq tab-bar-tab-hints t)                 ;; show tab numbers
+(setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+(setq tab-bar-auto-width-max '((200) 20))
+
+
+(custom-set-faces
+  '(tab-bar
+   ((t (:font "JetBrainsMono Nerd Font-12"
+        :foreground "white"
+        :background "#242424"))))
+ '(tab-bar-tab
+   ((t (:inherit tab-bar
+	:weight bold
+	:underline nil
+        :overline nil
+        :box (:line-width 8 :color "#242424" :style nil)))))
+ '(tab-bar-tab-inactive
+   ((t (:inherit tab-bar
+	:weight light
+	:underline nil
+	:overline nil
+	:box (:line-width 8 :color "#565063" :style nil)
+	:background "#565063"
+	:inherit (tab-bar))))))
+
+
+
+;;Use emacs as an app launcher
+(require 'app-launcher)
+
+(defun emacs-app-luncher ()
+  "Emacs launcher"
+  (interactive)
+  (with-selected-frame
+      (make-frame '((name . "emacs-run-launcher")
+		    (minibuffer . only)
+		    (fullscreen . 0)
+		    (undecorated . t)
+		    ;;(auto-raise . t)
+		    ;;(tool-bar-lines . 0)
+		    ;;(menu-bar-lines . 0)
+		    (internal-border-width . 10)
+		    (width . 80)
+		    (height . 11)))
+    (unwind-protect
+	(app-launcher-run-app)
+      (delete-frame))))
+
+
+
+;;Use emacs as a file opener with an external application
+(defun open-file-with-emacs ()
+  "Open a file externally, selecting it from a temporary minibuffer frame."
+  (interactive)
+  (with-selected-frame
+      (make-frame '((name . "emacs-open-file")
+                             (minibuffer . only)
+			     (fullscreen . 0)
+                             (undecorated . t)
+                             (internal-border-width . 10)
+                             (width . 100)
+                             (height . 11)))
+    (unwind-protect
+        (let ((file (read-file-name "File: ")))
+          (start-process "open-file" nil "xdg-open" (expand-file-name file)))
+      (delete-frame))))
+
+
+
 ;;Higlight current line with pulsar
 (use-package pulsar
   :ensure t
@@ -78,7 +167,12 @@
   (setq pulsar-iterations 10)
   (setq pulsar-face 'pulsar-cyan)
   (setq pulsar-highlight-face 'pulsar-green)
-  (pulsar-global-mode 1))
+  (add-to-list 'pulsar-pulse-functions 'other-window)
+  (add-to-list 'pulsar-pulse-functions 'switch-to-buffer)
+  (add-to-list 'pulsar-pulse-functions 'kill-buffer)
+  (add-to-list 'pulsar-pulse-functions 'find-file))
+
+(pulsar-global-mode 1)
 
 (setq set-mark-command-repeat-pop t)
 
@@ -180,20 +274,6 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
-;;Theme configuration
-;;(setq modus-themes-mode-line '(borderless padded))
-;;(load-theme 'modus-vivendi t)
-
-(load-theme 'wombat)
-;;
-(use-package doom-modeline
-  :ensure t
-  :init
-  (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-major-mode-icon t
-	doom-modeline-minor-modes nil
-	doom-modeline-height 40))
 
 
 
@@ -216,6 +296,7 @@
 (use-package powerthesaurus
   :ensure t
   :bind ("C-c t" . powerthesaurus-lookup-dwim))
+
 
 
 ;;Email
