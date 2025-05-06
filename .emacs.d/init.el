@@ -313,10 +313,6 @@
   ;;Avoid weird line breaks in text emails.
   (setq mu4e-compose-format-flowed t)
 
-  (setq shr-color-visible-luminance-min 60)
-  (setq shr-max-image-proportion 0.5)
-  (setq shr-width 80)
-  
   (setq message-kill-buffer-on-exit t) 
   (setq mu4e-view-show-images t)
 
@@ -457,6 +453,17 @@
 
 
   (mu4e t))
+
+
+(add-hook 'mu4e-view-mode-hook
+          (lambda ()
+	    (setq shr-color-visible-luminance-min 60)
+	    (setq shr-current-font "JetBrainsMono Nerd Font")
+	    (setq shr-max-image-proportion 0.5)
+            (setq shr-width nil)
+            (setq shr-max-width 300);; Let SHR use the window width
+            (visual-line-mode 1)))
+
 
 
 ;;Write emails in html
