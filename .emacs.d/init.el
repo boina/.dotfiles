@@ -758,7 +758,7 @@
 	  (holiday-fixed 9 24 "Fiesta Local: La Merced Barcelona")
 	  (holiday-fixed 12 26 "Fiesta Local: San Esteban")))
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "FOLLOW(f)" "|" "CANCELLED(c)" "DONE(d)")))
+	'((sequence "TODO(t)" "FOLLOW(f)" "WORKING ON IT(w)" "|" "CANCELLED(c)" "UNDOABLE(u)" "DONE(d)")))
   (setq org-agenda-custom-commands
 	'(("d" "Today's agenda."
 	   ((tags-todo "+PRIORITY=\"A\"" ((org-agenda-overriding-header "Important tasks\n")))
