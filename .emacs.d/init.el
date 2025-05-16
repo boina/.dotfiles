@@ -269,6 +269,9 @@
   (pdf-tools-install :no-query)
   (setq-default pdf-view-display-size 'fit-width))
 
+
+(add-hook 'pdf-view-mode-hook (lambda () (auto-revert-mode 1)))
+
 (use-package company
   :ensure t
   :init
