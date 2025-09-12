@@ -57,7 +57,8 @@
 
 
 ;; Disable line numbers for some modes
-(dolist (mode '(org-mode-hook
+(dolist (mode '(mu4e-main-mode-hook
+		org-mode-hook
                 term-mode-hook
                 shell-mode-hook
                 treemacs-mode-hook
