@@ -793,6 +793,8 @@
 	  ("m" "Metrics Capture")
 	  ("mp" "Blood pressure" table-line (file+headline "~/OrgFiles/Metrics.org" "Pressure")
 	   "| %U | %^{High} | %^{Low} | %^{Heart rate} | %^{Notes} |" :kill-buffer t)
+	  ("mw" "Weight" table-line (file+headline "~/OrgFiles/Metrics.org" "Weight")
+	   "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)
 	  ("mr" "Running" table-line (file+headline "~/OrgFiles/Metrics.org" "Running")
 	   "| %U | %^{Distance} | %^{Time} | %^{Pace} | %^{Notes} |" :kill-buffer t)
 	  ("n" "Notes")
